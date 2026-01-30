@@ -2,6 +2,7 @@
 
 ## Team Members
 - Tun Tauk Oo
+- Zwe Khant Lin
 
 ## Features
 - Dashboard with total sales, charts
