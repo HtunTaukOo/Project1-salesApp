@@ -1,10 +1,6 @@
 import { useState } from "react";
 import products from "../data/product-item.json";
-import {
-  getTransactions,
-  saveTransactions,
-  saveCategory
-} from "../utils/storage";
+import {getTransactions,saveTransactions,saveCategory} from "../utils/storage";
 import SalesTable from "../components/SalesTable";
 
 export default function SalesJournal() {
@@ -17,14 +13,14 @@ export default function SalesJournal() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    let product = products.find(p => p.itemName === Number(productName));
-    let category = product?.category || customCategory;
+    let product = products.find(p => p.itemName === productName);
 
+    const category = product?.category || customCategory;
     if (!category) return;
 
     if (!product) {
       product = {
-        itemName: "Custom Item",
+        itemName: customCategory,
         description: "User defined item",
         unitPrice: 0,
         inventory: "-"
@@ -40,19 +36,20 @@ export default function SalesJournal() {
       quantity,
       description: product.description,
       unitPrice: product.unitPrice,
-      date,
       inventory: product.inventory,
+      date,
       totalPrice
     };
 
-    const updated = [...transactions, newTransaction];
-    setTransactions(updated);
-    saveTransactions(updated);
-
+    const updatedTransactions = [...transactions, newTransaction];
+    setTransactions(updatedTransactions);
+    saveTransactions(updatedTransactions);
     saveCategory(category);
 
-    setCustomCategory("");
     setProductName("");
+    setCustomCategory("");
+    setQuantity(1);
+    setDate("");
   }
 
   return (
@@ -65,9 +62,9 @@ export default function SalesJournal() {
           onChange={e => setProductName(e.target.value)}
         >
           <option value="">Other / Custom</option>
-          {products.map(p => (
-            <option key={p.id} value={p.id}>
-              {p.itemName}
+          {products.map(product => (
+            <option key={product.itemName} value={product.itemName}>
+              {product.itemName}
             </option>
           ))}
         </select>
@@ -104,6 +101,7 @@ export default function SalesJournal() {
     </div>
   );
 }
+
 
 
 
