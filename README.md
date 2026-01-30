@@ -18,7 +18,7 @@
 ![Journal](./screenshots/journal.png)
 
 ## Live Demo
-https://htuntaukoo.github.io/Project1-salesApp/
+https://htuntaukoo.github.io/Project1-salesApp/#/
 
 ## Tech Stack
 - React
