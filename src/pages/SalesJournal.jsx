@@ -9,7 +9,7 @@ import SalesTable from "../components/SalesTable";
 
 export default function SalesJournal() {
   const [transactions, setTransactions] = useState(() => getTransactions());
-  const [productId, setProductId] = useState("");
+  const [productName, setProductName] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [date, setDate] = useState("");
   const [customCategory, setCustomCategory] = useState("");
@@ -17,7 +17,7 @@ export default function SalesJournal() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    let product = products.find(p => p.id === Number(productId));
+    let product = products.find(p => p.itemName === Number(productName));
     let category = product?.category || customCategory;
 
     if (!category) return;
@@ -49,11 +49,10 @@ export default function SalesJournal() {
     setTransactions(updated);
     saveTransactions(updated);
 
-    // 🔹 Save new category
     saveCategory(category);
 
     setCustomCategory("");
-    setProductId("");
+    setProductName("");
   }
 
   return (
@@ -62,8 +61,8 @@ export default function SalesJournal() {
 
       <form onSubmit={handleSubmit} className="form-grid">
         <select
-          value={productId}
-          onChange={e => setProductId(e.target.value)}
+          value={productName}
+          onChange={e => setProductName(e.target.value)}
         >
           <option value="">Other / Custom</option>
           {products.map(p => (
@@ -73,7 +72,7 @@ export default function SalesJournal() {
           ))}
         </select>
 
-        {!productId && (
+        {!productName && (
           <input
             type="text"
             placeholder="Enter custom category"
